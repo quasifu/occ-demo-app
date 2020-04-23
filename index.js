@@ -10,6 +10,8 @@ server.use(express.json());
 server.use(authMiddleware);
 
 server.get("/v1/printers", routes.doSomething);
+server.get("/api/v1/:containerName", routes.listContainer);
+server.get("/api/v1/:containerName/:blobName", routes.getItem);
 server.get("/", routes.getStatus);
 
 const port = process.env.PORT ? process.env.PORT : 1337;
