@@ -13,13 +13,13 @@ server.use(authMiddleware);
 server.get("/v1/printers", routes.doSomething);
 server.get("/api/v1/:containerName", routes.listContainer);
 server.get(
-  "/api/v1/:containerName/:blobName",
+  "/api/v1/:containerName/*",
   proxy(`https://${process.env.ACCOUNT}.blob.core.windows.net`, {
     limit: "5mb",
     proxyReqPathResolver: function (req) {
       return new Promise(function (resolve, reject) {
         resolve(
-          `/${req.params.containerName}/${req.params.blobName}${process.env.SAS_TOKEN}`
+          `/${req.params.containerName}/${req.params[0]}${process.env.SAS_TOKEN}`
         );
       });
     },
